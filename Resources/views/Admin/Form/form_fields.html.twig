@@ -24,6 +24,9 @@
              {% endif %}
              {% endspaceless %}"
         >
+            <div class="alert alert-error" ng-if="ctrl.hasError">
+                [[ ctrl.errorText ]]
+            </div>
             <div class="row" ng-if="ctrl.allowImages">
                 <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="imageId in ctrl.medias">
                     <div class="button-container">

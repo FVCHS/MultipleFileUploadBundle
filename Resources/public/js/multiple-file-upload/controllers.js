@@ -17,6 +17,9 @@
         vm.id = '';
         vm.field = '';
 
+        vm.hasError = false;
+        vm.errorText = '';
+
         var responseMediaId = null;
 
         vm.initUploader = function() {
@@ -73,6 +76,13 @@
             uploader.onCompleteAll = function() {
                 uploader.clearQueue();
                 vm.enableSaveButtons();
+            };
+
+            uploader.onErrorItem = function(fileItem, response, status, headers) {
+                vm.errorText = response.error.message;
+                vm.hasError = true;
+
+                console.error('onErrorItem', response.error);
             };
         };
 

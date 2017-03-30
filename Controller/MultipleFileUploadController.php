@@ -64,7 +64,20 @@ class MultipleFileUploadController extends Controller
         $media->setContext($mediaContext);
         $media->setProviderName($fieldConfiguration['provider']);
 
-        $mediaManager->save($media);
+        try {
+            $mediaManager->save($media);
+        } catch (\Exception $exception) {
+            return new JsonResponse([
+                'success' => false,
+                'error' => [
+                    'code' => $exception->getCode(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                    'message' => $exception->getMessage(),
+                    'trace' => $exception->getTrace()
+                ]
+            ], 403);
+        }
 
         $this->setMediaForField($entity, $field, $media);
 
